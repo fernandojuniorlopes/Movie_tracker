@@ -5,7 +5,6 @@ import { useAuth } from '../contexts/AuthContext';
 
 const NavigationBar = () => {
   const { isLoggedIn, logout, token } = useAuth(); // Use the useAuth hook to get authentication state
-  console.log(isLoggedIn)
   let [username, setUsername] = useState()
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const NavigationBar = () => {
       <nav className="navbar">
         <ul className='left-links'>
           <li className='left-links li'><Link to="/"><b>Home</b></Link></li>
-          <li className='left-links li'><b>Movies</b></li>
+          <li className='left-links li'><Link to="/movie"><b>Movies</b></Link></li>
         </ul>
         <ul className='right-links'>
           {!isLoggedIn && (
@@ -53,7 +52,7 @@ const NavigationBar = () => {
           )}
           {isLoggedIn && (
             <>
-              <li className="right-links li"><Link to="/"><b>Hello {username}!</b></Link></li>
+              <li className="right-links li"><Link to="/list"><b>{username}</b></Link></li>
               <li className="right-links li" onClick={logout}><b>Logout</b></li>
             </>
           )}
