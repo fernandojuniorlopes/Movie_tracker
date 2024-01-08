@@ -1,0 +1,122 @@
+/* main.css */
+
+/* HomePage styles */
+.home-page {
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .home-page__title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3366ff;
+    margin-bottom: 10px;
+  }
+
+  .home-div_center{
+    display: flex;
+    color:#3366ff;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+  }
+  
+  /* LoginForm styles */
+  .login-form {
+    margin: 20px;
+  }
+  
+  .login-form input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+/*Navigation Bar Styles*/
+.navigation-bar {
+    background-color: black;
+    padding: 10px 20px;
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    /* Additional styling for the navbar */
+  }
+  .left-links, .right-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .left-links li,
+  .right-links li {
+    display: inline; /* To display list items horizontally */
+    margin: 0 40px; /* Adjust margin as needed */
+    font-size:25px;
+    font-family:'Lucida Console';
+  }
+  .left-links b,
+  .right-links b{
+    cursor: pointer;
+    color: #f0f0f0 !important;
+  }
+  .left-links a,
+  .right-links a{
+    text-decoration: none;
+  }
+
+.workout-item {
+  padding-left: 20px;
+}
+/*Event content Styles*/
+.event-content {
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  color: white;
+}
+
+.event-content button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  content: 'x';
+  font-weight: 300;
+  font-family: Arial, sans-serif;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/*Legend Styles*/
+.legend {
+  list-style-type: none;
+  padding: 0;
+}
+
+.legend-item {
+  display: inline-block;
+  margin: 0 10px 10px 0;
+  align-items: center;
+  flex-direction: row;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 5px;
+  border: 1px solid black;
+}
