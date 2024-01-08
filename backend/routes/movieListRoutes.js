@@ -4,8 +4,9 @@ const router = express.Router();
 const movieListController = require('../controllers/movieListController');
 const { verifyToken } = require('../middleware/authMiddleware');
 
-// route POST register
 router.post('/addmovie', verifyToken, movieListController.addMovie);
+
+router.get('/mylist', verifyToken, movieListController.getMovie)
 
 // Export the router
 module.exports = router;

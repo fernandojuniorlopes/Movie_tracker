@@ -120,3 +120,19 @@
   margin-right: 5px;
   border: 1px solid black;
 }
+.movie-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.movie-poster {
+  width: 100px;
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 20px;
+}
+
+.movie-details {
+  flex: 1;
+  text-align: left;
+}

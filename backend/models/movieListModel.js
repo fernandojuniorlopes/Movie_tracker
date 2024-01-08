@@ -21,11 +21,11 @@ const MovieList = sequelize.define('MovieList', {
     allowNull: true,
     validate: {
       min: 1,
-      max: 5,
+      max: 10,
     },
   },
   status: {
-    type: DataTypes.ENUM('plan-to-watch', 'watching', 'completed', 'dropped'),
+    type: DataTypes.ENUM('Plan-to-watch', 'Watching', 'Completed', 'Dropped'),
     allowNull: false,
   },
   isFavorite: {
