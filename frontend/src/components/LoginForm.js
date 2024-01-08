@@ -1,6 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext'; // Adjust the path accordingly
 
+/*:TODO 
+*  Handling token expiry
+*  Token Refresh
+*/
+
 const LoginForm = () => {
   const { login } = useContext(AuthContext); // Use the login function from AuthContext
   const [email, setEmail] = useState('');
