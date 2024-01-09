@@ -15,10 +15,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setIsLoggedIn(false);
-    setToken('');
-    localStorage.removeItem('token');
-    window.location.href = '/login';
+    const isConfirmed = window.confirm(`Are you sure you want to logout?`);
+    if (isConfirmed) {
+      setIsLoggedIn(false);
+      setToken('');
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
   };
 
   useEffect(() => {

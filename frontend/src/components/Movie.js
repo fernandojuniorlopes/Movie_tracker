@@ -100,7 +100,6 @@ function Movie() {
 
     return (
         <div>
-            {/* Search Bar */}
             <form onSubmit={handleSearchSubmit} style={{marginTop: "50px", textAlign:"center"}}>
                 <input
                     type="text"
@@ -115,15 +114,14 @@ function Movie() {
             {/* Display Search Results or Movie List */}
             {searchResults && searchResults.length > 0 ? (
                 <div>
-                    <h2>Search Results:</h2>
+                    <h2 className="heading-title" >Search Results:</h2>
                     {searchResults.map((movie) => (
                         <div key={movie.id} className="movie-container">
-                            <img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+                            <img className="movie-poster-catalog" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
                             <div className="movie-details">
                                 <h3>{movie.title}</h3>
                                 <p>{movie.release_date}</p>
                                 <p>Rating: {movie.vote_average}</p>
-                                {/* Add other details you want to display */}
                                 <button onClick={() => addToWatchlist(movie)}>Add to Watchlist</button>
                                 {selectedMovie && selectedMovie.id === movie.id && (
                                     <form onSubmit={(e) => { e.preventDefault(); handleFormSubmit(); }}>
@@ -153,7 +151,7 @@ function Movie() {
                 </div>
             ) : (
                 <div>
-                    <h2>Movie List:</h2>
+                    <h2  className="heading-title" >Movie List:</h2>
                     {movieList.map((movie) => (
                         <div key={movie.id} style={{ marginBottom: "20px", textAlign: "center" }}>
                             {/* Display movie details and add to watchlist button */}

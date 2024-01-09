@@ -28,16 +28,42 @@ const movieListController = {
       return res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
   },
-  async getMovie(req,res){
+  async getMovie(req, res) {
     const userId = req.user.userId;
     try {
       const userMovies = await MovieList.findAll({
         where: { userId },
+        attributes: ['movieId', 'movieName', 'rating', 'status', 'isFavorite'],
+      });
+
+      return res.status(200).json({ success: true, userMovies });
+    } catch (error) {
+      console.error('Error getting user movie list:', error);
+      return res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  },
+  async deleteMovie(req, res) {   
+    const userId = req.user.userId;
+    const id =  req.params.movieId;
+    try {
+      // Find and delete the workout by ID
+      const movieToDelete = await MovieList.findOne({
+        where: {
+          userId,
+          movieId: id,
+        },
       });
   
-      return res.status(200).json({ success: true, userMovies });
-    }catch(error){
-      console.error('Error getting user movie list:', error);
+      if (!movieToDelete) {
+        return res.status(404).json({ success: false, message: 'Movie not found in user list' });
+      }
+  
+      // Delete the movie
+      await movieToDelete.destroy();
+  
+      return res.status(200).json({ success: true, message: 'Movie deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting movie:', error);
       return res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
   }

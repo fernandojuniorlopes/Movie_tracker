@@ -1,84 +1,212 @@
 /* main.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: gray;
+}
+
 /* HomePage styles */
 .home-page {
-    background-color: #f0f0f0;
-    padding: 20px;
-  }
-  
-  .home-page__title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #3366ff;
-    margin-bottom: 10px;
-  }
+  margin: 0;
+  /* Reset margin to remove default spacing */
+  padding: 0;
+  /* Reset padding to remove default spacing */
+  height: 100vh;
+}
 
-  .home-div_center{
-    display: flex;
-    color:#3366ff;
-    justify-content: center; /* Horizontally center */
-    align-items: center; /* Vertically center */
-  }
-  
-  /* LoginForm styles */
-  .login-form {
-    margin: 20px;
-  }
-  
-  .login-form input {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #f0f0f0;
-    border-radius: 4px;
-  }
-  
-  .login-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #f0f0f0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+.home-page_register-button{
+  background-color:black;
+  color:white !important;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 4px;
+  cursor: pointer;
+  height:50px;
+  width:200px;
+}
+.home-page-link{
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-page_register-button:hover{
+  background-color:rgb(83, 82, 82);
+  color:black !important;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 4px;
+  cursor: pointer;
+  height:50px;
+  font-weight: 700;
+  transition: color 0.3s, background-color 0.7s;
+  width:200px;
+}
+
+.home-page_login-link{
+  font-family: 'Roboto', sans-serif;
+  margin:0px;
+  font-size:15px;
+}
+
+.home-page_login-link:hover{
+  font-family: 'Roboto', sans-serif;
+  margin:0px;
+  font-size:15px;
+  text-decoration: underline;
+}
+
+.home-page__title {
+  -webkit-text-stroke: .1px black;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  /* You can adjust the font weight as needed (e.g., 400 for regular, 700 for bold) */
+  font-size: 3rem;
+  /* Adjust the font size as needed */
+  color: black;
+}
+
+.home-page_text-section{
+  height:300px;
+  text-align: center;
+}
+
+.home-page__content {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  /* You can adjust the font weight as needed (e.g., 400 for regular, 700 for bold) */
+  font-size: 1.5rem;
+  /* Adjust the font size as needed */
+  color: #333;
+}
+
+.home-div_center {
+  display: flex;
+  color: #3366ff;
+  justify-content: center;
+  /* Horizontally center */
+  align-items: center;
+  /* Vertically center */
+}
+
+/* LoginForm styles */
+.login-form {
+  margin: 20px;
+}
+
+.login-form input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: black;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 /*Navigation Bar Styles*/
 .navigation-bar {
-    background-color: black;
-    padding: 10px 20px;
-  }
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    /* Additional styling for the navbar */
-  }
-  .left-links, .right-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .left-links li,
-  .right-links li {
-    display: inline; /* To display list items horizontally */
-    margin: 0 40px; /* Adjust margin as needed */
-    font-size:25px;
-    font-family:'Lucida Console';
-  }
-  .left-links b,
-  .right-links b{
-    cursor: pointer;
-    color: #f0f0f0 !important;
-  }
-  .left-links a,
-  .right-links a{
-    text-decoration: none;
-  }
-
-.workout-item {
-  padding-left: 20px;
+  background-color: black;
+  height:80px;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  height:80px;
+  line-height: 80px; /* Match the line-height with the navbar height */
+}
+.navigation-bar .navbar li {
+  line-height: 80px; /* Match the line-height with the navbar height */
+}
+
+.left-links, .right-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.left-links li,
+.right-links li {
+  display: inline;
+  margin: 0 40px;
+  font-size: 25px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.left-links b,
+.right-links b {
+  cursor: pointer;
+  color: #f0f0f0;
+}
+
+.left-links a,
+.right-links a {
+  text-decoration: none;
+}
+
+.navigation-bar .navbar .left-links li b:hover,
+.navigation-bar .navbar .right-links li b:hover {
+  line-height: 80px; /* Match the line-height with the navbar height */
+  color: black; /* Change the color to your desired hover color */
+  background-color: white; /* Change the background color when hovering */
+  transition: color 0.3s, background-color 0.3s; /* Add a smooth transition effect */
+  border-radius: 2px;
+  height: 100%;
+}
+
+.right-links .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.right-links .dropbtn {
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+}
+
+.right-links .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: black; /* Add your desired background color */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  color:white;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 4px;
+  top: 100%; /* Position the dropdown below the button */
+  left: -65%; /* Center the dropdown horizontally */
+}
+
+.right-links .dropdown-content a {
+  color: black; /* Add your desired text color */
+  padding:0 10px;
+  text-decoration: none;
+  display: block;
+  font-family: 'Roboto', sans-serif;
+  color:white;
+}
+
+.right-links .dropdown-content a:hover {
+  border-radius: 4px;
+  background-color: #ddd; /* Add your desired background color on hover */
+  color: black; /* Add your desired text color on hover */
+}
+
+.right-links .dropdown:hover .dropdown-content {
+  display: block;
+}
+
 /*Event content Styles*/
 .event-content {
   border: none;
@@ -95,9 +223,9 @@
   content: 'x';
   font-weight: 300;
   font-family: Arial, sans-serif;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 /*Legend Styles*/
@@ -120,6 +248,7 @@
   margin-right: 5px;
   border: 1px solid black;
 }
+
 .movie-container {
   display: flex;
   align-items: center;
@@ -128,7 +257,8 @@
 
 .movie-poster {
   width: 100px;
-  height: auto; /* Maintain aspect ratio */
+  height: auto;
+  /* Maintain aspect ratio */
   margin-right: 20px;
 }
 
@@ -136,3 +266,104 @@
   flex: 1;
   text-align: left;
 }
+
+.movie-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+
+.movie-item {
+  width: 140px;
+  /* Adjust the width based on your preference */
+  margin-bottom: 20px;
+  position: relative;
+  /* Add position relative for positioning the title overlay */
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  /* Optional: Add border-radius for a rounded appearance */
+}
+
+.movie-title-overlay {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Add a semi-transparent black overlay */
+  color: #fff;
+  /* Text color for the title */
+  padding: 8px;
+  /* Add padding for better visibility */
+  box-sizing: border-box;
+  font-size: 12px;
+  /* Adjust font size as needed */
+  text-align: center;
+  opacity: 0;
+  /* Initially hide the overlay */
+  transition: opacity 0.3s ease;
+  /* Add a smooth transition effect */
+}
+
+.movie-item:hover .movie-title-overlay {
+  opacity: 1;
+  /* Show the overlay on hover */
+}
+
+.movie-poster-catalog {
+  height: 200px;
+  margin: 20px;
+  border-radius: 8px;
+  /* Optional: Add border-radius for a rounded appearance */
+}
+
+.heading-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  /* You can adjust the font weight as needed (e.g., 400 for regular, 700 for bold) */
+  font-size: 2rem;
+  /* Adjust the font size as needed */
+  color: #333;
+  /* Adjust the color as needed */
+  /* Additional styling properties can be added here */
+}
+
+.table-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  /* You can adjust the font weight as needed (e.g., 400 for regular, 700 for bold) */
+  font-size: 1.7rem;
+  /* Adjust the font size as needed */
+  color: black;
+  /* Adjust the color as needed */
+}
+
+.table-body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  /* You can adjust the font weight as needed (e.g., 400 for regular, 700 for bold) */
+  font-size: 1.1rem;
+  /* Adjust the font size as needed */
+  color: black;
+  /* Adjust the color as needed */
+}
+
+.svg-icon {
+  cursor: pointer;
+  color: black; /* You can set the color to your preference */
+  transition: box-shadow 0.3s ease;
+}
+
+.svg-icon:hover {
+  box-shadow: 0 0 5px 2px white;
+  color: rgba(19, 18, 18, 0.994); /* Change the color on hover if desired */
+}
+.div-style {
+  float:left;
+  width:50%;
+};

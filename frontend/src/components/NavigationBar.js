@@ -12,8 +12,8 @@ const NavigationBar = () => {
     const fetchData = async () => {
       try {
         if (isLoggedIn) {
-        // Asynchronous function
-        const result = await fetch('http://localhost:5000/api/protected-route', {
+          // Asynchronous function
+          const result = await fetch('http://localhost:5000/api/protected-route', {
             method: 'GET',
             headers: {
               'Authorization': token,
@@ -21,11 +21,11 @@ const NavigationBar = () => {
             },
           });
 
-        // JSON response
-        const data = await result.json();
+          // JSON response
+          const data = await result.json();
 
-        // Set username
-        setUsername(data.username);
+          // Set username
+          setUsername(data.username);
         }
       } catch (error) {
         console.error('Error:', error.message);
@@ -52,7 +52,12 @@ const NavigationBar = () => {
           )}
           {isLoggedIn && (
             <>
-              <li className="right-links li"><Link to="/list"><b>{username}</b></Link></li>
+              <li className="right-links li dropdown"><b className="dropbtn">{username}</b>
+                <div className="dropdown-content">
+                  <Link to="/list"><a href="1">Profile</a></Link>
+                  <Link to="/analytics"><a href="2">Analytics</a></Link>
+                </div>
+              </li>
               <li className="right-links li" onClick={logout}><b>Logout</b></li>
             </>
           )}
