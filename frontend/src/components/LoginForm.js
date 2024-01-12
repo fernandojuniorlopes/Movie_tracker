@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext'; // Adjust the path accordingly
+import '../styles/main.css'
 
 /*:TODO 
 *  Handling token expiry
@@ -37,13 +39,16 @@ const LoginForm = () => {
   };
 
   return (
+    <div className="login-div">
     <form onSubmit={handleLogin} className='login-form'>
+    <b>Email</b>
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
       />
+      <b>Password</b>
       <input
         type="password"
         value={password}
@@ -51,7 +56,10 @@ const LoginForm = () => {
         placeholder="Password"
       />
       <button type="submit">Login</button>
+      &nbsp;
+      <button><Link to="/">Cancel</Link></button>
     </form>
+    </div>
   );
 };
 

@@ -12,6 +12,18 @@ const movieListController = {
         return res.status(400).json({ success: false, message: 'Missing required parameters' });
       }
 
+      // Find and delete the workout by ID
+      const movieToDelete = await MovieList.findOne({
+        where: {
+          userId,
+          movieId: movieId,
+        },
+      });
+
+      if (movieToDelete) {
+        await movieToDelete.destroy();
+      }
+
       // Create a new movie in the MovieList table
       const newMovie = await MovieList.create({
         movieId,
@@ -42,9 +54,9 @@ const movieListController = {
       return res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
   },
-  async deleteMovie(req, res) {   
+  async deleteMovie(req, res) {
     const userId = req.user.userId;
-    const id =  req.params.movieId;
+    const id = req.params.movieId;
     try {
       // Find and delete the workout by ID
       const movieToDelete = await MovieList.findOne({
@@ -53,15 +65,46 @@ const movieListController = {
           movieId: id,
         },
       });
-  
+
       if (!movieToDelete) {
         return res.status(404).json({ success: false, message: 'Movie not found in user list' });
       }
-  
+
       // Delete the movie
       await movieToDelete.destroy();
-  
+
       return res.status(200).json({ success: true, message: 'Movie deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting movie:', error);
+      return res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  },
+  async updateMovie(req, res) {
+    const userId = req.user.userId;
+    const id = req.params.movieId;
+    try {
+      // Find the movie by ID
+      const movieToUpdate = await MovieList.findOne({
+        where: {
+          userId,
+          movieId: id,
+        },
+      });
+
+      if (!movieToUpdate) {
+        return res.status(404).json({ success: false, message: 'Movie not found in user list' });
+      }
+      // Update movie data based on the request body
+      const updatedMovieData = req.body;
+
+      movieToUpdate.rating = updatedMovieData.rating;
+      movieToUpdate.status = updatedMovieData.status;
+      movieToUpdate.isFavorite = updatedMovieData.isFavorite;
+
+      await movieToUpdate.save();
+
+
+      return res.status(200).json({ success: true, message: 'Movie updated successfully' });
     } catch (error) {
       console.error('Error deleting movie:', error);
       return res.status(500).json({ success: false, message: 'Internal Server Error' });

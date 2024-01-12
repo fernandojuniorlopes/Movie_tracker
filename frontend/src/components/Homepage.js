@@ -43,7 +43,7 @@ const HomePage = () => {
                 <div className="movie-list">
                     {recentMovies.map((movie) => (
                         <div key={movie.id} className="movie-item">
-                            <img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}alt={movie.title} />
+                            <Link to={`/movies/${movie.id}`} href='../styles/main.css'><img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}alt={movie.title} /></Link>
                             <div className="movie-title-overlay">{movie.title}<p>Avg Score: {movie.vote_average}</p></div>
                         </div>
                     ))}
@@ -55,7 +55,7 @@ const HomePage = () => {
                 <div className="movie-list">
                     {highestRatedMovies.map((movie) => (
                         <div key={movie.id} className="movie-item">
-                            <img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}alt={movie.title} />
+                            <Link to={`/movies/${movie.id}`} href='../styles/main.css'><img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}alt={movie.title} /></Link>
                             <div className="movie-title-overlay">{movie.title}<p>Avg Score: {movie.vote_average}</p></div>
                         </div>
                     ))}

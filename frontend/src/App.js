@@ -9,23 +9,27 @@ import Profile from './components/Profile';
 import Homepage from './components/Homepage';
 import Analytics from './components/Analytics';
 import './styles/main.css'
+import MoviePage from './components/MoviePage';
+import Footer from './components/Footer'
 
 const App = () => {
     return (
         <div className='home-page'>
-        <BrowserRouter>
-            <AuthProvider>
-                <NavigationBar/>
-                <Routes>
-                    <Route path="/" element={<Homepage/>}/>
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/register" element={<RegisterForm />} />
-                    <Route path="/movie" element={<Movie/>}/>
-                    <Route path="/list" element={<Profile/>}/>
-                    <Route path="/analytics" element={<Analytics/>}/>
-                </Routes>
-            </AuthProvider>
-        </BrowserRouter>
+            <BrowserRouter>
+                <AuthProvider>
+                    <NavigationBar />
+                    <Routes>
+                        <Route path="/" element={<Homepage />} />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/register" element={<RegisterForm />} />
+                        <Route path="/movie" element={<Movie />} />
+                        <Route path="/movies/:id?" element={<MoviePage/>} />
+                        <Route path="/list" element={<Profile />} />
+                        <Route path="/analytics" element={<Analytics />} />
+                    </Routes>
+                    <Footer/>
+                </AuthProvider>
+            </BrowserRouter>
         </div>
     );
 }

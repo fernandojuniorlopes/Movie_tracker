@@ -6,7 +6,7 @@ const app = express();
 const User = require('./models/userModel');
 const MovieList = require('./models/movieListModel'); 
 const port = 5000;
-const { verifyToken } = require('./middleware/authMiddleware');
+const { refreshToken } = require('./middleware/authMiddleware');
 const movieListRoutes =  require('./routes/movieListRoutes');
 // const sequelize  = require('sequelize');
 
@@ -32,8 +32,6 @@ app.use(express.json());
 })();
 
 app.use('/', userRoutes);
-
-// Use the movieListRoutes
 app.use('/api/movielist', movieListRoutes);
 
 app.listen(port, () => {
