@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/main.css'
-
+const movie_api = process.env.REACT_APP_MOVIE_API;
 
 function Movie() {
     const [movieList, setMovieList] = useState([]);
@@ -13,7 +13,7 @@ function Movie() {
     let movieSelected = false;
 
     const getMovie = () => {
-        fetch("https://api.themoviedb.org/3/discover/movie?api_key=3aa8331b87376c256164c7868c3efe83")
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${movie_api}`)
             .then(res => res.json())
             .then(json => setMovieList(json.results))
     }
@@ -82,9 +82,7 @@ function Movie() {
         event.preventDefault();
 
         try {
-            // Make a request to TMDb API to search for movies
-            const tmdbApiKey = '3aa8331b87376c256164c7868c3efe83';
-            const tmdbResponse = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${searchQuery}`);
+            const tmdbResponse = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${movie_api}&query=${searchQuery}`);
             const tmdbData = await tmdbResponse.json();
 
             // Update search results

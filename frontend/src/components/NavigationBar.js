@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import notFoundImage from '../utils/img.png';
+const movie_api = process.env.REACT_APP_MOVIE_API;
 
 const NavigationBar = () => {
   const [query, setQuery] = useState('');
@@ -21,8 +22,7 @@ const NavigationBar = () => {
 
   const fetchMovieSuggestions = async (searchQuery) => {
     try {
-      const tmdbApiKey = '3aa8331b87376c256164c7868c3efe83';
-      const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${searchQuery}`);
+      const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${movie_api}&query=${searchQuery}`);
       const tmdbData = await response.json();
       setMovies(tmdbData.results.slice(0, 5));
     } catch (error) {

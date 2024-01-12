@@ -6,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: gray;
+  font-family: 'Roboto', sans-serif;
 }
 
 /* HomePage styles */
@@ -505,4 +506,37 @@ body {
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
   height:600px;
+}
+
+.status{
+  color:white;
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+  width:100px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.status-Completed {
+  background-color: blue;
+}
+
+.status-Dropped {
+  background-color: red; /* Set your desired color for dropped status */
+}
+
+.status-Plan-to-watch {
+  background-color: yellow; /* Set your desired color for plan-to-watch status */
+}
+
+.status-Watching {
+  background-color: green; /* Set your desired color for watching status */
+}
+
+.status-Unwatched {
+  background-color: black;
+}
+
+.form-add-movie{
+  margin-top:10px
 }

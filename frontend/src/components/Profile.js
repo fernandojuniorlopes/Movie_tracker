@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import '../styles/main.css'
 
@@ -25,7 +26,6 @@ const Profile = () => {
       if (response.ok) {
         const data = await response.json();
         setUserMovies(data.userMovies);
-        console.log(data.userMovies);
       } else {
         console.error('Error fetching user movies:', response.statusText);
       }
@@ -130,7 +130,7 @@ const Profile = () => {
 
   return (
     <div style={{ marginTop: '50px', textAlign: 'center' ,minHeight:"600px"}}>
-      <div style={{ margin: 'auto', width: '50%' }}>
+      <div style={{ margin: 'auto', width: '80%' }}>
         <table style={{ fontSize: '20px', width: '100%', borderCollapse: 'collapse' }}>
           <thead className='table-title'>
             <tr>
@@ -185,7 +185,7 @@ const Profile = () => {
                   </tr>
                 ) : (
                   <tr>
-                    <td style={{ textAlign: 'left' }}>{movie.movieName}</td>
+                    <td style={{ textAlign: 'left' }}><Link to={`/movies/${movie.movieId}`}>{movie.movieName}</Link></td>
                     <td>{movie.rating}</td>
                     <td>{movie.status}</td>
                     <td>{movie.isFavorite ? 'Yes' : 'No'}</td>

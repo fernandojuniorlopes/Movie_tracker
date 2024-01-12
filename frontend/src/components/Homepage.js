@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+const movie_api = process.env.REACT_APP_MOVIE_API;
+console.log(process.env);
+
 const HomePage = () => {
     const [recentMovies, setRecentMovies] = useState([]);
     const [highestRatedMovies, setHighestRatedMovies] = useState([]);
-
+    console.log(movie_api);
     useEffect(() => {
         // Fetch most recent movies
         fetchMostRecentMovies();
@@ -14,14 +17,14 @@ const HomePage = () => {
     }, []);
 
     const fetchMostRecentMovies = () => {
-        fetch("https://api.themoviedb.org/3/discover/movie?api_key=3aa8331b87376c256164c7868c3efe83")
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${movie_api}`)
             .then(res => res.json())
             .then(json => setRecentMovies(json.results.slice(0, 10))) // Limit to 10 movies
             .catch(error => console.error('Error fetching most recent movies:', error));
     }
 
     const fetchHighestRatedMovies = () => {
-        fetch("https://api.themoviedb.org/3/discover/movie?api_key=3aa8331b87376c256164c7868c3efe83&language=en-US&sort_by=vote_average.desc&vote_count.gte=1000&page=1`;")
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${movie_api}&language=en-US&sort_by=vote_average.desc&vote_count.gte=1000&page=1`)
         .then((response) => response.json())
         .then((json) => setHighestRatedMovies(json.results.slice(0, 10))) // Get the top 10 movies
         .catch((error) => console.error('Error fetching highest-rated movies:', error));

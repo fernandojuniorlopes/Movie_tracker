@@ -103,10 +103,30 @@ const movieListController = {
 
       await movieToUpdate.save();
 
-
       return res.status(200).json({ success: true, message: 'Movie updated successfully' });
     } catch (error) {
       console.error('Error deleting movie:', error);
+      return res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  },
+  async getSingularMovie(req, res) {
+    const userId = req.user.userId;
+    const id = req.params.movieId;
+    try {
+      // Find the movie by ID
+      const movie = await MovieList.findOne({
+        where: {
+          userId,
+          movieId: id,
+        },
+      });
+      if (!movie) {
+        return res.status(404).json({ success: false, message: 'Movie not found in user list' });
+      }
+      const status = movie.status;
+        return res.status(200).json({ success: true, status });
+    } catch (error) {
+      console.error('Error finding movie:', error);
       return res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
   }
