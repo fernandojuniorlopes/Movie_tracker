@@ -12,7 +12,7 @@ const movie_api = process.env.REACT_APP_MOVIE_API;
 const MoviePage = () => {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
-    const { isLoggedIn, logout, token } = useAuth(); // Use the useAuth hook to get authentication state
+    const { isLoggedIn, token } = useAuth(); // Use the useAuth hook to get authentication state
     const [movieNotFound, setmovieNotFound] = useState(null);
     const [movieUser, setMovieUser] = useState(null);
     const [showForm, setShowForm] = useState(null);
@@ -104,7 +104,7 @@ const MoviePage = () => {
         } else {
             <p>An error as occurred</p>
         }
-    }, [id]);
+    }, [isLoggedIn, token, id]);
 
     if (!movie && id && !movieNotFound) {
         return <div>Loading...</div>;
@@ -117,7 +117,7 @@ const MoviePage = () => {
                 <>
                     <div className='main-movie-div' style={{ display: "flex", height: "600px" }}>
                         <div className='specific-movie-poster'>
-                            <img src={movie.poster_path ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}` : notFoundImage} alt={movie.title} />
+                            <img style={{ width: '200px', height: '300px' }} src={movie.poster_path ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}` : notFoundImage} alt={movie.title} />
                             <button className='home-page_register-button' onClick={handleAddToListClick}>Add to list</button>
                             {showForm && (
                                 <form className='form-add-movie' onSubmit={(e) => { e.preventDefault(); handleFormSubmit(); }}>
@@ -160,7 +160,7 @@ const MoviePage = () => {
                                         {index < movie.genres.length - 1 ? ', ' : ''}</span>
                                 ))}
                             </p>
-                            <b className='specific-movie-score'>User score: {movie.vote_average} </b><FontAwesomeIcon className='specific-movie-score-icon' icon={faStar} />
+                            <b className='specific-movie-score'>User score: {movie.vote_average.toFixed(2)} </b><FontAwesomeIcon className='specific-movie-score-icon' icon={faStar} />
                             <br></br><br></br>
                             <b>Overview</b>
                             <p>{movie.overview}</p>

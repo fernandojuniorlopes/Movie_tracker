@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const movie_api = process.env.REACT_APP_MOVIE_API;
-console.log(process.env);
 
 const HomePage = () => {
     const [recentMovies, setRecentMovies] = useState([]);
     const [highestRatedMovies, setHighestRatedMovies] = useState([]);
-    console.log(movie_api);
     useEffect(() => {
         // Fetch most recent movies
         fetchMostRecentMovies();

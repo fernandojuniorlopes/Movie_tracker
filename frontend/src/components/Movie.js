@@ -10,7 +10,6 @@ function Movie() {
     const [isFavorite, setIsFavorite] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    let movieSelected = false;
 
     const getMovie = () => {
         fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${movie_api}`)

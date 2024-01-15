@@ -11,6 +11,7 @@ import Analytics from './components/Analytics';
 import './styles/main.css'
 import MoviePage from './components/MoviePage';
 import Footer from './components/Footer'
+import MovieLists from './components/MovieLists';
 
 const App = () => {
     return (
@@ -22,7 +23,7 @@ const App = () => {
                         <Route path="/" element={<Homepage />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/register" element={<RegisterForm />} />
-                        <Route path="/movie" element={<Movie />} />
+                        <Route path="/movie" element={<MovieLists />} />
                         <Route path="/movies/:id?" element={<MoviePage/>} />
                         <Route path="/list" element={<Profile />} />
                         <Route path="/analytics" element={<Analytics />} />

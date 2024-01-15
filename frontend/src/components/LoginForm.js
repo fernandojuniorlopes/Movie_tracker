@@ -3,11 +3,6 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext'; // Adjust the path accordingly
 import '../styles/main.css'
 
-/*:TODO 
-*  Handling token expiry
-*  Token Refresh
-*/
-
 const LoginForm = () => {
   const { login } = useContext(AuthContext); // Use the login function from AuthContext
   const [email, setEmail] = useState('');

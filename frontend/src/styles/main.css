@@ -18,44 +18,45 @@ body {
   height: 100vh;
 }
 
-.home-page_register-button{
-  background-color:black;
-  color:white !important;
+.home-page_register-button {
+  background-color: black;
+  color: white !important;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
   border-radius: 4px;
   cursor: pointer;
-  height:50px;
-  width:200px;
+  height: 50px;
+  width: 200px;
 }
-.home-page-link{
+
+.home-page-link {
   color: inherit;
   text-decoration: none;
 }
 
-.home-page_register-button:hover{
-  background-color:rgb(83, 82, 82);
-  color:black !important;
+.home-page_register-button:hover {
+  background-color: rgb(83, 82, 82);
+  color: black !important;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
   border-radius: 4px;
   cursor: pointer;
-  height:50px;
+  height: 50px;
   font-weight: 700;
   transition: color 0.3s, background-color 0.7s;
-  width:200px;
+  width: 200px;
 }
 
-.home-page_login-link{
+.home-page_login-link {
   font-family: 'Roboto', sans-serif;
-  margin:0px;
-  font-size:15px;
+  margin: 0px;
+  font-size: 15px;
 }
 
-.home-page_login-link:hover{
+.home-page_login-link:hover {
   font-family: 'Roboto', sans-serif;
-  margin:0px;
-  font-size:15px;
+  margin: 0px;
+  font-size: 15px;
   text-decoration: underline;
 }
 
@@ -69,8 +70,8 @@ body {
   color: black;
 }
 
-.home-page_text-section{
-  height:300px;
+.home-page_text-section {
+  height: 300px;
   text-align: center;
 }
 
@@ -119,7 +120,7 @@ body {
 /*Navigation Bar Styles*/
 .navigation-bar {
   background-color: black;
-  height:80px;
+  height: 80px;
   position: relative;
 }
 
@@ -159,57 +160,60 @@ body {
   display: flex;
   flex-direction: column;
   background-color: black;
-  color:white;
+  color: white;
   list-style-type: none;
   font-size: 10px;
-  width:300px;
-  padding:0px;
+  width: 300px;
+  padding: 0px;
   z-index: 100;
 }
 
 .dropdown-elements {
-  left:0px;
-  margin:0px;
+  left: 0px;
+  margin: 0px;
   width: 100%;
-  height:100px;
+  height: 100px;
   display: flex;
   align-items: flex-start;
 }
 
-.dropdown-elements-poster{
-  height:100%;
-  margin:0px;
-  padding:0px;
-  width:70px;
+.dropdown-elements-poster {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  width: 70px;
 }
 
 .movie-info {
   flex-grow: 1;
-  width: 220px; /* Fixed width for the text area */
-  height:100%;
-  margin-left:10px;
-  margin-top:10px;
+  width: 220px;
+  /* Fixed width for the text area */
+  height: 100%;
+  margin-left: 10px;
+  margin-top: 10px;
   font-size: 15px;
   box-sizing: border-box;
-  line-height: 1; /* Adjust as needed */
+  line-height: 1;
+  /* Adjust as needed */
 }
 
 .movie-info a {
   margin: 0;
-  padding:0;
+  padding: 0;
   text-align: left;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   font-weight: bold;
 }
 
 .dropdown-elements:hover {
   background-color: white;
-  color:black;
+  color: black;
 }
 
 .navigation-bar .navbar li {
-  line-height: 80px; /* Match the line-height with the navbar height */
+  line-height: 80px;
+  /* Match the line-height with the navbar height */
 }
 
 .left-links b,
@@ -225,10 +229,14 @@ body {
 
 .navigation-bar .navbar .left-links li b:hover,
 .navigation-bar .navbar .right-links li b:hover {
-  line-height: 80px; /* Match the line-height with the navbar height */
-  color: black; /* Change the color to your desired hover color */
-  background-color: white; /* Change the background color when hovering */
-  transition: color 0.3s, background-color 0.3s; /* Add a smooth transition effect */
+  line-height: 80px;
+  /* Match the line-height with the navbar height */
+  color: black;
+  /* Change the color to your desired hover color */
+  background-color: white;
+  /* Change the background color when hovering */
+  transition: color 0.3s, background-color 0.3s;
+  /* Add a smooth transition effect */
   border-radius: 2px;
   height: 100%;
 }
@@ -246,29 +254,35 @@ body {
 .right-links .dropdown-content {
   display: none;
   position: absolute;
-  background-color: black; /* Add your desired background color */
+  background-color: black;
+  /* Add your desired background color */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  color:white;
+  color: white;
   font-family: 'Roboto', sans-serif;
   border-radius: 4px;
-  top: 100%; /* Position the dropdown below the button */
-  left: -65%; /* Center the dropdown horizontally */
+  top: 100%;
+  /* Position the dropdown below the button */
+  left: -65%;
+  /* Center the dropdown horizontally */
 }
 
 .right-links .dropdown-content a {
-  color: black; /* Add your desired text color */
-  padding:0 10px;
+  color: black;
+  /* Add your desired text color */
+  padding: 0 10px;
   text-decoration: none;
   display: block;
   font-family: 'Roboto', sans-serif;
-  color:white;
+  color: white;
 }
 
 .right-links .dropdown-content a:hover {
   border-radius: 4px;
-  background-color: #ddd; /* Add your desired background color on hover */
-  color: black; /* Add your desired text color on hover */
+  background-color: #ddd;
+  /* Add your desired background color on hover */
+  color: black;
+  /* Add your desired text color on hover */
 }
 
 .right-links .dropdown:hover .dropdown-content {
@@ -321,6 +335,8 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  border:1px black;
+  border-style: solid;
 }
 
 .movie-poster {
@@ -344,10 +360,13 @@ body {
 
 .movie-item {
   width: 140px;
-  /* Adjust the width based on your preference */
   margin-bottom: 20px;
   position: relative;
-  /* Add position relative for positioning the title overlay */
+}
+.movie-item-list {
+  width: 140px;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .movie-poster {
@@ -389,8 +408,9 @@ body {
   border-radius: 8px;
   /* Optional: Add border-radius for a rounded appearance */
 }
-.elements-movie-title{
-  margin:0px;
+
+.elements-movie-title {
+  margin: 0px;
   padding-left: 70px;
 }
 
@@ -418,76 +438,85 @@ body {
 .table-body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
-  /* You can adjust the font weight as needed (e.g., 400 for regular, 700 for bold) */
   font-size: 1.1rem;
-  /* Adjust the font size as needed */
   color: black;
-  /* Adjust the color as needed */
+  text-decoration: none;
+}
+
+.table-body :visited {
+  color: inherit;
+  text-decoration: none;
 }
 
 .svg-icon {
   cursor: pointer;
-  color: black; /* You can set the color to your preference */
+  color: black;
+  /* You can set the color to your preference */
   transition: box-shadow 0.3s ease;
 }
 
 .svg-icon-nav {
   cursor: pointer;
-  color: white; /* You can set the color to your preference */
+  color: white;
+  /* You can set the color to your preference */
   transition: box-shadow 0.3s ease;
 }
 
 .svg-icon:hover {
   box-shadow: 0 0 5px 2px white;
-  color: rgba(19, 18, 18, 0.994); /* Change the color on hover if desired */
+  color: rgba(19, 18, 18, 0.994);
+  /* Change the color on hover if desired */
 }
 
 .div-style {
-  float:left;
-  width:50%;
-};
+  float: left;
+  width: 50%;
+}
+
+;
 
 .main-movie-div {
   display: flex;
 }
 
-.specific-movie-title{
+.specific-movie-title {
   font-family: 'Roboto', sans-serif;
 }
 
-.specific-movie-score{
+.specific-movie-score {
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
 }
 
-.specific-movie-score-icon{
+.specific-movie-score-icon {
   font-size: 30px;
-  color:gold;
+  color: gold;
 }
 
-.specific-movie-poster{
-  margin-top: 20px;
-  padding-left:20px;
-  flex: 0 0 200px; /* flex-grow: 0, flex-shrink: 0, width: 300px */
+.specific-movie-poster {
+  margin-top: 50px;
+  padding-left: 50px;
+  flex: 0 0 200px;
 }
-.specific-movie-details{
-  padding:20px 100px 20px 100px;
-  flex:1;
-  width:100%;
+
+.specific-movie-details {
+  padding: 20px 100px 20px 50px;
+  flex: 1;
+  width: 100%;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
   text-align: justify;
 }
 
-.footer-content{
-  height:200px;
+.footer-content {
+  height: 200px;
   font-family: 'Roboto', sans-serif;
   text-align: center;
   background-color: black;
-  color:white;
+  color: white;
   text-decoration: none;
-  margin:0;
-  padding-top:50px;
+  margin: 0;
+  padding-top: 50px;
 }
 
 /* Remove color for visited links */
@@ -500,19 +529,19 @@ body {
   color: inherit;
 }
 
-.login-div{
+.login-div {
   margin-left: 250px;
   margin-right: 250px;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
-  height:600px;
+  height: 600px;
 }
 
-.status{
-  color:white;
+.status {
+  color: white;
   font-size: 15px;
   font-family: 'Roboto', sans-serif;
-  width:100px;
+  width: 100px;
   text-align: center;
   padding-top: 10px;
 }
@@ -522,21 +551,28 @@ body {
 }
 
 .status-Dropped {
-  background-color: red; /* Set your desired color for dropped status */
+  background-color: red;
+  /* Set your desired color for dropped status */
 }
 
 .status-Plan-to-watch {
-  background-color: yellow; /* Set your desired color for plan-to-watch status */
+  background-color: yellow;
+  /* Set your desired color for plan-to-watch status */
 }
 
 .status-Watching {
-  background-color: green; /* Set your desired color for watching status */
+  background-color: green;
+  /* Set your desired color for watching status */
 }
 
 .status-Unwatched {
   background-color: black;
 }
 
-.form-add-movie{
-  margin-top:10px
+.form-add-movie {
+  margin-top: 10px
+}
+
+.lists-movie-list {
+  margin: 0 30%;
 }
