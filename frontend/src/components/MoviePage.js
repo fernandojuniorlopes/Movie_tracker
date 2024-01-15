@@ -12,13 +12,14 @@ const movie_api = process.env.REACT_APP_MOVIE_API;
 const MoviePage = () => {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
-    const { isLoggedIn, token } = useAuth(); // Use the useAuth hook to get authentication state
+    const { isLoggedIn, token } = useAuth(); // Hook to get authentication state
     const [movieNotFound, setmovieNotFound] = useState(null);
     const [movieUser, setMovieUser] = useState(null);
     const [showForm, setShowForm] = useState(null);
     const [rating, setRating] = useState(0);
     const [status, setStatus] = useState('Plan-to-watch');
     const [isFavorite, setIsFavorite] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleAddToListClick = () => {
         setShowForm(!showForm);
@@ -33,7 +34,7 @@ const MoviePage = () => {
                 return;
             }
 
-            // Send a POST request to your backend API with the movie ID, user token, and additional information
+            // POST request to backend API with the movie ID, user token, and additional information
             const response = await fetch('http://localhost:5000/api/movielist/addMovie', {
                 method: 'POST',
                 headers: {
@@ -49,10 +50,13 @@ const MoviePage = () => {
                 }),
             });
 
-            // Handle the response from the backend
+            // Response from the backend
             if (response.ok) {
-                console.log('Movie added to watchlist successfully!');
-                // Clear selected movie and form fields after successful addition
+                setSuccessMessage('Movie successfully added to your list!');
+                setShowForm(!showForm);
+                setRating(0);
+                setStatus('Plan-to-watch');
+                setIsFavorite(false);
             } else {
                 console.error('Error adding movie to watchlist:', response.statusText);
             }
@@ -60,6 +64,8 @@ const MoviePage = () => {
             console.error('Error adding movie to watchlist:', error);
         }
     };
+
+    
 
     useEffect(() => {
         if (id) {
@@ -119,6 +125,7 @@ const MoviePage = () => {
                         <div className='specific-movie-poster'>
                             <img style={{ width: '200px', height: '300px' }} src={movie.poster_path ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}` : notFoundImage} alt={movie.title} />
                             <button className='home-page_register-button' onClick={handleAddToListClick}>Add to list</button>
+                            {successMessage && <p className="success-message">{successMessage}</p>}
                             {showForm && (
                                 <form className='form-add-movie' onSubmit={(e) => { e.preventDefault(); handleFormSubmit(); }}>
                                     <label>

@@ -33,15 +33,7 @@ function Movie() {
                 return;
             }
 
-            console.log('Data being sent:', {
-                movieId: selectedMovie.id,
-                movieName: selectedMovie.title,
-                rating: parseInt(rating),
-                status,
-                isFavorite,
-            });
-
-            // Send a POST request to your backend API with the movie ID, user token, and additional information
+            // POST request to your backend API with the movie ID, user token, and additional information
             const response = await fetch('http://localhost:5000/api/movielist/addMovie', {
                 method: 'POST',
                 headers: {
@@ -108,7 +100,6 @@ function Movie() {
                 <button style={{fontSize:"20px"}} type="submit">Search</button>
             </form>
 
-            {/* Display Search Results or Movie List */}
             {searchResults && searchResults.length > 0 ? (
                 <div>
                     <h2 className="heading-title" >Search Results:</h2>
@@ -151,7 +142,6 @@ function Movie() {
                     <h2  className="heading-title" >Movie List:</h2>
                     {movieList.map((movie) => (
                         <div key={movie.id} style={{ marginBottom: "20px", textAlign: "center" }}>
-                            {/* Display movie details and add to watchlist button */}
                         </div>
                     ))}
                 </div>

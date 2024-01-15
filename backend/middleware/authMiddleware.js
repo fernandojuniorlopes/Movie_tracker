@@ -13,7 +13,7 @@ const verifyToken = (req, res, next) => {
       return res.status(401).json({ message: 'Token is not valid' });
     }
 
-    // Attach the decoded user information to the request object
+    // Decoded user information to the request object
     req.user = decoded;
 
     next();

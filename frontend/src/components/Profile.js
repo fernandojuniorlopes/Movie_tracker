@@ -76,7 +76,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(`http://localhost:5000/api/movielist/editmovie/${editedMovie.movieId}`, {
-        method: 'PUT', // or 'PATCH' depending on your backend route
+        method: 'PUT',
         headers: {
           'Authorization': token,
           'Content-Type': 'application/json',
@@ -88,16 +88,15 @@ const Profile = () => {
       });
 
       if (response.ok) {
-        // Movie updated successfully, you may want to fetch the updated list
+        // Movie updated successfully
         fetchUserMovies();
         setEditMode(false); // Exit edit mode
       } else {
         console.error('Error updating movie:', response.statusText);
-        // Handle error as needed
+        
       }
     } catch (error) {
       console.error('Error updating movie:', error);
-      // Handle error as needed
     }
   };
 

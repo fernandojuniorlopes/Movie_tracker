@@ -8,9 +8,8 @@ const MovieList = require('./models/movieListModel');
 const port = 5000;
 const { refreshToken } = require('./middleware/authMiddleware');
 const movieListRoutes =  require('./routes/movieListRoutes');
-// const sequelize  = require('sequelize');
 
-// Allow all origins - you might want to configure this to a specific origin in a production environment
+// Allow all origins
 app.use(cors());
 app.use(express.json());
 

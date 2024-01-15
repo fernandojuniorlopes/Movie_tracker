@@ -10,6 +10,7 @@ router.post('/api/register', userController.registerUser);
 //rout POST Log in
 router.post('/api/login', userController.loginUser);
 
+//Router Get Username
 router.get('/api/protected-route', verifyToken, userController.getUsernameFromToken);
 
 // Export the router

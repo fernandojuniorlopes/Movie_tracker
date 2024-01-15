@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext'; // Adjust the path accordingly
+import { AuthContext } from '../contexts/AuthContext';
 import '../styles/main.css'
 
 const LoginForm = () => {
-  const { login } = useContext(AuthContext); // Use the login function from AuthContext
+  const { login } = useContext(AuthContext); // Login function from AuthContext
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,7 +22,7 @@ const LoginForm = () => {
       if (response.ok) {
         const tokenObject = await response.json();
         const tokenString = tokenObject.token;
-        // Use the login function from AuthContext to update authentication state
+        // AuthContext to update authentication state
         login(tokenString);
         window.location.href = '/';
       } else {

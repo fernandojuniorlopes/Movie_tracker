@@ -20,13 +20,11 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(false);
       setToken('');
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      window.location.href = '/';
     }
   };
 
   useEffect(() => {
-    // Additional logic to fetch user data or perform actions on login
-
   }, [isLoggedIn, token]);
 
   return (

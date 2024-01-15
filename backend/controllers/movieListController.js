@@ -5,8 +5,10 @@ const movieListController = {
   async addMovie(req, res) {
     try {
       const { movieId, movieName, rating, status, isFavorite } = req.body;
-      // Use the decoded user ID from the verifyToken middleware
+      
+      //Decoded user ID from the verifyToken middleware
       const userId = req.user.userId;
+      
       // Validate required parameters
       if (!movieId || !movieName || !status || isFavorite === undefined) {
         return res.status(400).json({ success: false, message: 'Missing required parameters' });
@@ -43,6 +45,8 @@ const movieListController = {
   async getMovie(req, res) {
     const userId = req.user.userId;
     try {
+
+      //Find all movies from a user
       const userMovies = await MovieList.findAll({
         where: { userId },
         attributes: ['movieId', 'movieName', 'rating', 'status', 'isFavorite'],
@@ -58,7 +62,8 @@ const movieListController = {
     const userId = req.user.userId;
     const id = req.params.movieId;
     try {
-      // Find and delete the workout by ID
+
+      // Find and delete the movie by ID
       const movieToDelete = await MovieList.findOne({
         where: {
           userId,
@@ -83,6 +88,7 @@ const movieListController = {
     const userId = req.user.userId;
     const id = req.params.movieId;
     try {
+
       // Find the movie by ID
       const movieToUpdate = await MovieList.findOne({
         where: {
@@ -101,6 +107,7 @@ const movieListController = {
       movieToUpdate.status = updatedMovieData.status;
       movieToUpdate.isFavorite = updatedMovieData.isFavorite;
 
+      //Save changes of the user
       await movieToUpdate.save();
 
       return res.status(200).json({ success: true, message: 'Movie updated successfully' });

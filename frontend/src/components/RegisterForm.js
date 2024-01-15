@@ -9,7 +9,7 @@ const RegistrationForm = () => {
   const handleRegistration = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/register', { // Replace with your backend URL
+      const response = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
