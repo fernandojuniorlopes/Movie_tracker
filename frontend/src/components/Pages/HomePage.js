@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-const movie_api = process.env.REACT_APP_MOVIE_API;
+import { useAPI } from '../../contexts/APIContext';
 
 const HomePage = () => {
-    const [recentMovies, setRecentMovies] = useState([]);
-    const [highestRatedMovies, setHighestRatedMovies] = useState([]);
+    const { recentData, topRatedData, fetchData } = useAPI();
+
     useEffect(() => {
-        // Fetch most recent movies
-        fetchMostRecentMovies();
-
-        // Fetch highest-rated movies
-        fetchHighestRatedMovies();
-    }, []);
-
-    const fetchMostRecentMovies = () => {
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${movie_api}`)
-            .then(res => res.json())
-            .then(json => setRecentMovies(json.results.slice(0, 10))) // Limit to 10 movies
-            .catch(error => console.error('Error fetching most recent movies:', error));
-    }
-
-    const fetchHighestRatedMovies = () => {
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${movie_api}&language=en-US&sort_by=vote_average.desc&vote_count.gte=1000&page=1`)
-        .then((response) => response.json())
-        .then((json) => setHighestRatedMovies(json.results.slice(0, 10))) // Get the top 10 movies
-        .catch((error) => console.error('Error fetching highest-rated movies:', error));
-    };
+        fetchData('recent', 1);
+        fetchData('topRated', 1);
+    }, [fetchData]);
 
     return (
         <div>
@@ -42,7 +24,7 @@ const HomePage = () => {
             <section>
                 <h2 className="heading-title" style={{textAlign:"center"}}>Most Recent Movies</h2>
                 <div className="movie-list">
-                    {recentMovies.map((movie) => (
+                    {recentData!=null && recentData.map((movie) => (
                         <div key={movie.id} className="movie-item">
                             <Link to={`/movies/${movie.id}`} href='../styles/main.css'><img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}alt={movie.title} /></Link>
                             <div className="movie-title-overlay">{movie.title}<p>Avg Score: {movie.vote_average}</p></div>
@@ -54,7 +36,7 @@ const HomePage = () => {
             <section>
                 <h2 className="heading-title" style={{textAlign:"center"}}>Highest Rated Movies</h2>
                 <div className="movie-list">
-                    {highestRatedMovies.map((movie) => (
+                    {topRatedData!=null && topRatedData.map((movie) => (
                         <div key={movie.id} className="movie-item">
                             <Link to={`/movies/${movie.id}`} href='../styles/main.css'><img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}alt={movie.title} /></Link>
                             <div className="movie-title-overlay">{movie.title}<p>Avg Score: {movie.vote_average}</p></div>

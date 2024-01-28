@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-
-const movie_api = process.env.REACT_APP_MOVIE_API;
+import { useAPI } from '../../contexts/APIContext';
 
 const genres = [
     { id: 28, name: 'Action' },
@@ -27,16 +26,10 @@ const genres = [
 ]
 
 const MovieLists = () => {
-    const [highestRatedMovies, setHighestRatedMovies] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const {topRatedData, fetchData, currentPage } = useAPI();
+    // const [highestRatedMovies, setHighestRatedMovies] = useState([]);
+    const [currPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
-    const fetchHighestRatedMovies = (newPage) => {
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${movie_api}&language=en-US&sort_by=vote_average.desc&vote_count.gte=1000&page=${newPage}`)
-            .then((response) => response.json())
-            .then((json) => setHighestRatedMovies(json.results))
-            .catch((error) => console.error('Error fetching highest-rated movies:', error));
-    };
 
     // Render page buttons
     const renderPageButtons = () => {
@@ -57,24 +50,24 @@ const MovieLists = () => {
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
-        fetchHighestRatedMovies(newPage);
+        fetchData('topRated', newPage);
     };
 
 
     useEffect(() => {
-        fetchHighestRatedMovies(currentPage);
         const totalPages = 10;
         setTotalPages(totalPages);
-    }, [currentPage]);
+        fetchData('topRated', currPage);
+    }, [fetchData, currentPage, currPage]);
 
     return (
         <div>
             <section>
                 <h2 className="heading-title" style={{ textAlign: "center" }}>Highest Rated Movies</h2>
                 <div className="lists-movie-list">
-                    {highestRatedMovies.map((movie) => (
+                    {topRatedData!=null && topRatedData.map((movie) => (
                         <div key={movie.id} className="movie-container">
-                            <Link to={`/movies/${movie.id}`}><img className="movie-poster-catalog" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} /></Link>
+                            <Link to={`/movies/${movie.id}`}><img className="movie-poster-catalog" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={`img from ${movie.title}`}/></Link>
                             <div className="movie-details">
                                 <div><b>{movie.title}({movie.release_date.split("-")[0]})</b>
                                     <p><b>Average User Score: {movie.vote_average} </b><FontAwesomeIcon style={{fontSize:"15px",paddingBottom:"2px"}} className='specific-movie-score-icon' icon={faStar} /></p>

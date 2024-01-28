@@ -1,27 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import {useAuth} from '../contexts/AuthContext'
 
 const RegistrationForm = () => {
+  const {register} = useAuth();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleRegistration = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch('http://localhost:5000/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, email, password })
-      });
-
-      const data = await response.json();
-      console.log(data); // Display success or error message
-    } catch (error) {
-      console.error('Error registering:', error);
-    }
+    const response = await register(username, email, password);
+    if (response.ok) {
+      console.log('User registered successfully');
+  } else {
+      console.error('Error registering user:', response.statusText);
+  }
   };
 
   return (

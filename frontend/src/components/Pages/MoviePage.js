@@ -1,19 +1,19 @@
 // MoviePage.js
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import notFoundImage from '../utils/img.png';
-import '../styles/main.css'
+import notFoundImage from '../../utils/img.png';
+import '../../styles/main.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import '../styles/main.css'
-import { useAuth } from '../contexts/AuthContext';
-const movie_api = process.env.REACT_APP_MOVIE_API;
+import { useAuth } from '../../contexts/AuthContext';
+import { useAPI } from '../../contexts/APIContext';
+import { useBackend } from '../../contexts/BackendContext';
 
 const MoviePage = () => {
+    const { fetchMovie, movieData } = useAPI();
+    const {addUserMovie, fetchUserMovieInfo} = useBackend();
     const { id } = useParams();
-    const [movie, setMovie] = useState(null);
     const { isLoggedIn, token } = useAuth(); // Hook to get authentication state
-    const [movieNotFound, setmovieNotFound] = useState(null);
     const [movieUser, setMovieUser] = useState(null);
     const [showForm, setShowForm] = useState(null);
     const [rating, setRating] = useState(0);
@@ -34,29 +34,13 @@ const MoviePage = () => {
                 return;
             }
 
-            // POST request to backend API with the movie ID, user token, and additional information
-            const response = await fetch('http://localhost:5000/api/movielist/addMovie', {
-                method: 'POST',
-                headers: {
-                    'Authorization': token,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    movieId: id,
-                    movieName: movie.title,
-                    rating: parseInt(rating),
-                    status,
-                    isFavorite,
-                }),
-            });
-
-            // Response from the backend
+            const response = await addUserMovie(id, movieData.title, rating, status, isFavorite);
+            
             if (response.ok) {
                 setSuccessMessage('Movie successfully added to your list!');
                 setShowForm(!showForm);
-                setRating(0);
-                setStatus('Plan-to-watch');
-                setIsFavorite(false);
+                const result = await fetchUserMovieInfo(id);
+                setMovieUser(result);
             } else {
                 console.error('Error adding movie to watchlist:', response.statusText);
             }
@@ -65,65 +49,36 @@ const MoviePage = () => {
         }
     };
 
+    const checkUserMovie = useCallback(async () => {
+        if (isLoggedIn) {
+            const result = await fetchUserMovieInfo(id);
+            if(result.success){
+                setMovieUser(result);
+            }
+        }
+    }, [fetchUserMovieInfo, id, isLoggedIn]);
     
-
     useEffect(() => {
         if (id) {
-            // Fetch movie data based on the ID from the API
-            const fetchMovieData = async () => {
-                try {
-                    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${movie_api}`);
-                    const data = await response.json();
-                    if (response.ok) {
-                        setMovie(data);
-                    } else {
-                        setmovieNotFound(true);
-                    }
-                } catch (error) {
-                    console.error('Error fetching movie data:', error);
-                }
-            };
-            const fetchUserMovieInfo = async () => {
-                try {
-                    if (isLoggedIn) {
-                        // Asynchronous function
-                        const result = await fetch(`http://localhost:5000/api/movielist/getmovie/${id}`, {
-                            method: 'GET',
-                            headers: {
-                                'Authorization': token,
-                            },
-                        });
-                        // JSON response
-                        const data = await result.json();
-                        if (data.success) {
-                            setMovieUser(data)
-                        } else {
-                            setMovieUser(null);
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error:', error.message);
-                }
-            };
-            fetchMovieData();
-            fetchUserMovieInfo();
+            fetchMovie(id);
+            checkUserMovie(id);
         } else {
             <p>An error as occurred</p>
         }
-    }, [isLoggedIn, token, id]);
+    }, [fetchMovie, token, id, checkUserMovie]);
 
-    if (!movie && id && !movieNotFound) {
+    if (!movieData && id) {
         return <div>Loading...</div>;
     }
 
     return (
 
         <div>
-            {movie ? (
+            {movieData ? (
                 <>
                     <div className='main-movie-div' style={{ display: "flex", height: "600px" }}>
                         <div className='specific-movie-poster'>
-                            <img style={{ width: '200px', height: '300px' }} src={movie.poster_path ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}` : notFoundImage} alt={movie.title} />
+                            <img style={{ width: '200px', height: '300px' }} src={movieData.poster_path ? `https://image.tmdb.org/t/p/w200/${movieData.poster_path}` : notFoundImage} alt={movieData.title} />
                             <button className='home-page_register-button' onClick={handleAddToListClick}>Add to list</button>
                             {successMessage && <p className="success-message">{successMessage}</p>}
                             {showForm && (
@@ -149,7 +104,7 @@ const MoviePage = () => {
                                 </form>)}
                         </div>
                         <div className='specific-movie-details'>
-                            <h1 className='specific-movie-title'>{movie.title} ({movie.release_date.split("-")[0]})
+                            <h1 className='specific-movie-title'>{movieData.title} ({movieData.release_date.split("-")[0]})
                                 <div className='status'>
                                     {movieUser ? (
                                         <div className={`status-${movieUser.status}`}>
@@ -162,15 +117,15 @@ const MoviePage = () => {
                                     )}</div>
                             </h1>
                             <p>
-                                <b>Genres:</b> {movie.genres.map((genre, index) => (
+                                <b>Genres:</b> {movieData.genres.map((genre, index) => (
                                     <span key={genre.id}>{genre.name}
-                                        {index < movie.genres.length - 1 ? ', ' : ''}</span>
+                                        {index < movieData.genres.length - 1 ? ', ' : ''}</span>
                                 ))}
                             </p>
-                            <b className='specific-movie-score'>User score: {movie.vote_average.toFixed(2)} </b><FontAwesomeIcon className='specific-movie-score-icon' icon={faStar} />
+                            <b className='specific-movie-score'>User score: {movieData.vote_average.toFixed(2)} </b><FontAwesomeIcon className='specific-movie-score-icon' icon={faStar} />
                             <br></br><br></br>
                             <b>Overview</b>
-                            <p>{movie.overview}</p>
+                            <p>{movieData.overview}</p>
                         </div>
                     </div>
                 </>

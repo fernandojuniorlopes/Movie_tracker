@@ -2,41 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
-import '../styles/main.css'
-
+import '../../styles/main.css'
+import { useBackend } from '../../contexts/BackendContext';
 
 const Profile = () => {
-  const [userMovies, setUserMovies] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState('movieName');
+  const { fetchUserMovies, userMovies, saveEdit, deleteUserMovie } = useBackend();
+  const [localUserMovies, setLocalUserMovies] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
   const [editMode, setEditMode] = useState(false);
   const [editedMovie, setEditedMovie] = useState({});
 
-
-  const fetchUserMovies = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/movielist/mylist', {
-        method: 'GET',
-        headers: {
-          'Authorization': token,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUserMovies(data.userMovies);
-      } else {
-        console.error('Error fetching user movies:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching user movies:', error);
-    }
-  };
-
   useEffect(() => {
     fetchUserMovies();
-  }, []);
+  }, [fetchUserMovies]);
+
+  useEffect(() => {
+    setLocalUserMovies(userMovies);
+  }, [userMovies]);
+
+  const handleSaveEdit = async () => {
+    try {
+      await saveEdit(editedMovie);
+      await fetchUserMovies();
+      setEditMode(false);
+    } catch (error) {
+      console.error('Error saving or fetching user movies:', error);
+    }
+  };
 
   const sortUserMovies = (criteria) => {
     const sortedMovies = [...userMovies];
@@ -54,8 +46,7 @@ const Profile = () => {
       }
     });
 
-    setUserMovies(sortedMovies);
-    // Toggle sort order for the next click
+    setLocalUserMovies(sortedMovies);
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
@@ -71,90 +62,48 @@ const Profile = () => {
     }));
   };
 
-  const handleSaveEdit = async () => {
-    console.log(editedMovie)
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/movielist/editmovie/${editedMovie.movieId}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': token,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          rating: parseInt(editedMovie.rating),
-          status: editedMovie.status,
-          isFavorite: editedMovie.isFavorite})
-      });
-
-      if (response.ok) {
-        // Movie updated successfully
-        fetchUserMovies();
-        setEditMode(false); // Exit edit mode
-      } else {
-        console.error('Error updating movie:', response.statusText);
-        
-      }
-    } catch (error) {
-      console.error('Error updating movie:', error);
-    }
-  };
-
-
   const handleDeleteMovie = async (movieId, movieName) => {
     const isConfirmed = window.confirm(`Are you sure you want to delete ${movieName}?`);
     if (isConfirmed) {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:5000/api/movielist/deletemovie/${movieId}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': token,
-          },
-        });
-
-        if (response.ok) {
-          // Refresh the movie list after deletion
-          fetchUserMovies();
-
-        } else {
-          console.error('Error deleting exercise');
-        }
+        await deleteUserMovie(movieId);
+        await fetchUserMovies();
+        setEditMode(false);
       } catch (error) {
-        console.error('Error deleting exercise:', error);
+        console.error('Error saving or fetching user movies:', error);
       }
     }
   };
 
 
   return (
-    <div style={{ marginTop: '50px', textAlign: 'center' ,minHeight:"600px"}}>
+    <div style={{ marginTop: '50px', textAlign: 'center', minHeight: "600px" }}>
       <div style={{ margin: 'auto', width: '80%' }}>
         <table style={{ fontSize: '20px', width: '100%', borderCollapse: 'collapse' }}>
           <thead className='table-title'>
             <tr>
               <th style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => sortUserMovies('movieName')}>
-                Title {sortCriteria === 'movieName'}
+                Title
               </th>
               <th style={{ cursor: 'pointer' }} onClick={() => sortUserMovies('rating')}>
-                Rating {sortCriteria === 'rating'}
+                Rating
               </th>
               <th style={{ cursor: 'pointer' }} onClick={() => sortUserMovies('status')}>
-                Status {sortCriteria === 'status'}
+                Status
               </th>
               <th style={{ cursor: 'pointer' }} onClick={() => sortUserMovies('isFavorite')}>
-                Favorite {sortCriteria === 'isFavorite'}
+                Favorite
               </th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody className='table-body'>
-            {userMovies.map((movie) => (
+            {localUserMovies && localUserMovies.map((movie) => (
               <React.Fragment key={movie.movieId}>
                 {editMode && editedMovie.movieId === movie.movieId ? (
                   <tr>
                     <td style={{ textAlign: 'left' }}>
-                      <td>{editedMovie.movieName}</td>
+                      {editedMovie.movieName}
                     </td>
                     <td>
                       <input

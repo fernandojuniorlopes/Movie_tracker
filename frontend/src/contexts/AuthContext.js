@@ -8,10 +8,32 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!storedToken);
   const [token, setToken] = useState(storedToken || '');
 
-  const login = (newToken) => {
-    setIsLoggedIn(true);
-    setToken(newToken);
-    localStorage.setItem('token', newToken);
+  const login = async(email, password) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (response.ok) {
+        const tokenObject = await response.json();
+        const tokenString = tokenObject.token;
+        // AuthContext to update authentication state
+        setIsLoggedIn(true);
+        setToken(tokenString);
+        localStorage.setItem('token', tokenString);
+        window.location.href = '/';
+        return response;
+      } else {
+        console.error('Error logging in');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+
   };
 
   const logout = () => {
@@ -24,11 +46,29 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async(username, email,password) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      const data = await response;
+      console.log(response);
+      return data;
+    } catch (error) {
+      console.error('Error registering:', error);
+    }
+  }
+
   useEffect(() => {
   }, [isLoggedIn, token]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, token }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, token, register}}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,17 +1,18 @@
 import '../styles/main.css';
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import notFoundImage from '../utils/img.png';
-const movie_api = process.env.REACT_APP_MOVIE_API;
+import { useAPI } from '../contexts/APIContext';
+import { useBackend } from '../contexts/BackendContext';
 
 const NavigationBar = () => {
+  const { fetchMovieSuggestions, movieSuggestions } = useAPI();
+  const { getNameUser, nameUser } = useBackend();
   const [query, setQuery] = useState('');
-  const [movies, setMovies] = useState([]);
   const { isLoggedIn, logout, token } = useAuth(); // Use the useAuth hook to get authentication state
-  let [username, setUsername] = useState();
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef();
 
@@ -21,16 +22,6 @@ const NavigationBar = () => {
     setShowDropdown(inputValue.trim() !== '');
     // Fetch movie suggestions based on the input value
     fetchMovieSuggestions(inputValue);
-  };
-
-  const fetchMovieSuggestions = async (searchQuery) => {
-    try {
-      const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${movie_api}&query=${searchQuery}`);
-      const tmdbData = await response.json();
-      setMovies(tmdbData.results.slice(0, 5));
-    } catch (error) {
-      console.error('Error fetching movie suggestions:', error);
-    }
   };
 
   const handleClickOutside = (event) => {
@@ -45,40 +36,27 @@ const NavigationBar = () => {
     setQuery('');
     setShowDropdown(false);
   };
+  // Asynchronous function to fetch data or perform an action
+  const fetchUsername = async () => {
+    try {
+      if (isLoggedIn) {
+        getNameUser();
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+  document.addEventListener('click', handleClickOutside);
 
   useEffect(() => {
-    // Asynchronous function to fetch data or perform an action
-    const fetchData = async () => {
-      try {
-        if (isLoggedIn) {
-          // Asynchronous function
-          const result = await fetch('http://localhost:5000/api/protected-route', {
-            method: 'GET',
-            headers: {
-              'Authorization': token,
-              'Content-Type': 'application/json',
-            },
-          });
-
-          // JSON response
-          const data = await result.json();
-
-          // Set username
-          setUsername(data.username);
-        }
-      } catch (error) {
-        console.error('Error:', error.message);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
 
     // Call the asynchronous function when the component mounts
-    fetchData();
+    fetchUsername();
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [isLoggedIn, token]);
+  }, [isLoggedIn]);
   return (
     <div className="navigation-bar">
       <nav className="navbar">
@@ -94,8 +72,8 @@ const NavigationBar = () => {
               ref={inputRef}
             />
             <ul className="dropdown-menu">
-              {showDropdown && Array.isArray(movies) &&
-                movies.map((movie) => (
+              {showDropdown && Array.isArray(movieSuggestions) &&
+                movieSuggestions.map((movie) => (
                   <li className="dropdown-elements" key={movie.id}>
                     <img className="dropdown-elements-poster" src={movie.poster_path ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}` : notFoundImage} alt={movie.title} />
                     <div className="movie-info">
@@ -122,7 +100,7 @@ const NavigationBar = () => {
           {isLoggedIn && (
             <>
               <li className="right-links-li dropdown">
-                <b className="dropbtn">{username}</b>
+                <b className="dropbtn">{nameUser}</b>
                 <div className="dropdown-content">
                   <Link to="/list">Profile</Link>
                   <Link to="/analytics">Analytics</Link>
